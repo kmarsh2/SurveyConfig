@@ -1,0 +1,74 @@
+---
+title: "Untitled"
+author: "Kristin Marshall"
+date: "November 18, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Regression approach to understanding Hamel et al.'s survey configuration results
+The question we're trying to answer here is what can we learn from the results of the existing analyses of assessment models, in terms of the factors that influence how assessment output changes when survey data changes.
+
+## Data input
+The primary output is what Hamel et al. present in their analysis (percent change in OFL by species and survey reduction type.  I smashed the information in the tables in that manuscript together with some factors from the stock assessment prioritization to see what predictors might align with the responses in Owen's paper.
+
+```{r, include=FALSE}
+library(tidyverse)
+
+scon=read.csv('/Users/kristinmarshall/SurveyConfig/data/surveyexpdat.csv', header=T)
+
+cor(scon[,6:34])
+
+scon.dat<- scon %>%
+  gather(key="Red.Type",value="OFL.change",half:noSurv) %>%
+  mutate(OFL.norm=OFL.change-1)
+
+new.plot=ggplot(scon.dat, aes(Comm.Leng,Surv.Len)) +
+                  geom_point(aes(color=Sp.Type, size=OFL.change)) +
+                  facet_wrap(~Red.Type)
+               
+
+new.plot
+```
+
+###Response
+Percent change in OFL is the only response used here.
+
+Need to add the change in the survey cv for each reduction type-- this is discussed in the results text of the paper, but only presented by way of figures.  Survey cv would be a second response.
+
+###Predictors
+Predictors that might makes sense to look at include things that capture how well the species is surveyed (number of postive hauls, habitat preference, life history type), as well as factors that influence how the assessment for that species might respond due to reductions in observations (generation time, recruitment variability)
+
+From the survey prioritization: Recruitment CV, mean age in the catch, percent attainment, depletion, PSA, number of commercial length samples, commercial otolith samples, survey lengths, survey age-structures
+
+Others: number of positive hauls, status quo OFL
+
+##Regression
+Tried each predictor one at a time and compared AICs and the significance of coefficients.  Nothing is significant.  The only one that comes close is number of commercial otoliths.  AIC isn't better than a null model (less than 1 unit difference)
+```{r, include=F}
+
+lm1=glm(OFL.norm~n.pos.hauls, data=scon.dat)
+
+```
+
+##Extrapoloate regression results to new species
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

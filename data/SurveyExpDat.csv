@@ -1,0 +1,12 @@
+Sp.comm,Sp.name,Year.assess,Type.assess,Sp.Type,Rec.cv,Mean.age.catch,Percent.attain,Depletion,PSA,Comm.Leng,Comm.Oto,Surv.Len,Surv.Oto,N.indices,N.index.obs.,N.est.pars,n.mort.pars,n.growth.pars,n.SR.pars,n.recdevs,n.for.rec,n.sel.pars,n.ret.pars,n.index.var.pars,n.catchability.pars,n.pos.hauls,OFL.SQ,half,pass1,pass2,even,odd,noSurv
+Aurora,Sebastes.aurora,2013,Full,rockfish,0.5,31.1,0.32,0.637201,2.1,1780.5,483.3,1576.75,766.75,4,22,148,0,8,1,97,12,17,13,0,0,886,91,1.05,0.67,1.63,0.84,1.1,0.49
+Canary,Sebastes.pinniger,2015,Full,rockfish,0.5,10.1,0.1,0.565017739,2.01,1854.1,974.8,1029.25,711,4,28,165,1,9,1,53,12,89,0,0,0,442,121,0.98,1.05,1.07,1.04,0.99,1.16
+Chilipepper,Sebastes.goodei,2015,Full,rockfish,1,9.1,0.12,0.692081,1.35,1530.3,35.2,1294.5,762,5,59,96,0,5,1,48,12,30,0,0,0,849,2867,0.46,0.51,0.49,0.87,1.08,0.67
+Darkblotched,Sebastes.crameri,2015,Full,rockfish,0.75,9.4,0.25,0.40028,1.92,3602.8,2003.7,1941.5,839,4,27,200,1,6,1,143,12,16,14,2,5,1133,571,1.23,1.2,0.91,1.22,0.9,1.04
+Dover,Microstomus.pacificus,2011,Full,flatfish,0.35,13.7,0.1,0.84,1.54,7136.5,2958.5,9099.75,1037.25,4,28,206,2,10,1,103,12,51,21,4,2,5348,71494,0.8,0.92,0.71,0.71,0.73,0.68
+Petrale,Eopsetta.jordani,2015,Full,flatfish,0.4,6.9,0.89,0.31,1.94,5127.9,2278.1,4477.75,1135.5,5,65,300,2,10,2,170,12,48,48,2,6,2683,3352,0.85,0.92,0.83,0.81,0.85,0.46
+POP,Sebastes.alutus,2011,Full,rockfish,0.7,16.3,0.07,0.77,1.69,2108.3,1704.8,1036.25,701,7,48,111,1,0,1,81,12,11,5,0,0,448,1054,1.04,0.97,1.04,1.61,0.81,1.03
+Sablefish,Anoplopoma.fimbria,2015,Full,roundfish,0.95,9.7,0.65,0.354503126,1.64,9883.7,3863.8,4226.5,1610,5,69,238,2,8,1,162,12,41,7,3,2,4211,5894,1.09,1.21,1.21,1.09,1.24,1.26
+Rex,Glyptocephalus.zachirus,2013,Data-moderate,flatfish,0.8,7.6,0.13,0.799698,1.28,2796.9,724.8,7594,781,3,19,7,2,0,2,0,0,0,0,3,0,4020,6124,1.01,0.97,1.38,0.89,0.91,0.8
+Sharpchin,Sebastes.zacentrus,2013,Data-moderate,rockfish,0.8,13.3,0.03,0.68,2.05,149.9,42.3,1096.25,519.75,3,19,7,2,0,2,0,0,0,0,3,0,397,1014,0.54,0.46,0.87,0.57,0.55,0.4
+Yellowtail,Sebastes.flavidus,2013,Data-moderate,rockfish,0.38,14.1,0.26,0.752057,1.88,7379.8,2183.3,915.5,431.25,2,19,6,2,0,2,0,0,0,0,2,0,409,11838,0.85,0.47,0.12,0.11,2.96,0.57
