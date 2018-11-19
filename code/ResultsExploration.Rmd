@@ -44,7 +44,10 @@ Predictors that might makes sense to look at include things that capture how wel
 
 From the survey prioritization: Recruitment CV, mean age in the catch, percent attainment, depletion, PSA, number of commercial length samples, commercial otolith samples, survey lengths, survey age-structures
 
-Others: number of positive hauls, status quo OFL
+Others: number of positive hauls, status quo OFL, species type
+
+still need to try on Monday- assessment model type? species?
+used a mixed effects model to look at difference in sigma between species vs between species type, vs between reduction type
 
 ##Regression
 Tried each predictor one at a time and compared AICs and the significance of coefficients.  Nothing is significant.  The only one that comes close is number of commercial otoliths.  AIC isn't better than a null model (less than 1 unit difference)
