@@ -17,21 +17,38 @@ The primary output is what Hamel et al. present in their analysis (percent chang
 
 ```{r, include=FALSE}
 library(tidyverse)
+library(lme4)
 
-scon=read.csv('/Users/kristinmarshall/SurveyConfig/data/surveyexpdat.csv', header=T)
+#scon=read.csv('/Users/kristinmarshall/SurveyConfig/data/surveyexpdat.csv', header=T)
 
-cor(scon[,6:34])
+scon=read.csv('/Users/kristin.marshall/Rprojects/SurveyConfig/data/surveyexpdat.csv', header=T)
+
+#d=cor(scon[,6:34])
+#write.csv(d,'survconfigCOR.csv')
 
 scon.dat<- scon %>%
-  gather(key="Red.Type",value="OFL.change",half:noSurv) %>%
+  gather(key="Red.Type",value="OFL.change",half:odd) %>%
   mutate(OFL.norm=OFL.change-1)
 
-new.plot=ggplot(scon.dat, aes(Comm.Leng,Surv.Len)) +
-                  geom_point(aes(color=Sp.Type, size=OFL.change)) +
-                  facet_wrap(~Red.Type)
-               
+box.plot=ggplot(scon.dat, aes(Sp.Type,OFL.norm)) +
+                  geom_boxplot(aes(fill=Sp.Type)) 
+box.plot
+                  
 
+
+new.plot=ggplot(scon.dat, aes(Surv.Len,Comm.Leng)) +
+                  geom_point(aes(color=Sp.Type, size=exp(abs(OFL.norm)))) #+
+                  #facet_wrap(~Red.Type)+
+                  #scale_size_identity()
+              #abline(0,1)
 new.plot
+
+
+
+new.hist.plot=ggplot(scon.dat, aes(Rec.cv,Mean.age.catch)) +
+                  geom_jitter(aes(color=Sp.Type, size=log(OFL.change)))
+                 
+new.hist.plot
 ```
 
 ###Response
@@ -44,34 +61,67 @@ Predictors that might makes sense to look at include things that capture how wel
 
 From the survey prioritization: Recruitment CV, mean age in the catch, percent attainment, depletion, PSA, number of commercial length samples, commercial otolith samples, survey lengths, survey age-structures
 
-Others: number of positive hauls, status quo OFL, species type
+Others: number of positive hauls, status quo OFL, species type, assessment type, reduction type
 
-still need to try on Monday- assessment model type? species?
-used a mixed effects model to look at difference in sigma between species vs between species type, vs between reduction type
 
 ##Regression
-Tried each predictor one at a time and compared AICs and the significance of coefficients.  Nothing is significant.  The only one that comes close is number of commercial otoliths.  AIC isn't better than a null model (less than 1 unit difference)
+Tried each predictor one at a time and compared AICs and the significance of coefficients.  Nothing is significant.  None of the single-predictor models result in an AIC score better than a null model.  Below are plots of each variable
 ```{r, include=F}
 
-lm1=glm(OFL.norm~n.pos.hauls, data=scon.dat)
+lm2=glm(OFL.norm~1, data=scon.dat)
+summary(lm2)
+
+for(i in c(1,4,5)){
+  grp.plot<-ggplot(data=scon.dat, aes(scon.dat[,i],OFL.norm)) +
+    geom_boxplot() +
+    xlab(names(scon.dat)[i])
+  print(grp.plot)
+  
+}
+
+for (i in c(6:14,27)) {
+  #lm1=glm(OFL.norm~scon.dat[,i], data=scon.dat)
+  #summary(lm1)
+  reg.plot<-ggplot(data=scon.dat, aes(scon.dat[,i],OFL.norm)) +
+    geom_point(aes(color=Sp.comm, shape=Sp.Type)) +
+    geom_smooth(method=lm, se=TRUE) +
+    xlab(names(scon.dat)[i])
+  print(reg.plot)
+}
+  
+#lm2=glm(OFL.norm~1, data=scon.dat)
+
+#summary(lm2)
+
+#lm3=glm(OFL.norm~Rec.cv+ Mean.age.catch, data=scon.dat)
+
+```
+Another option is to look at some random effects and ask which factors have larger or smaller variance.  When I looked at this, species has the largest sd, then assessment type (full or DM), 
+
+
+```{r, include=F}
+
+me1<-lmer(OFL.norm~(1|Sp.Type)+(1|Type.assess), data=scon.dat, REML=T)
+summary(me1)
+AIC(me1)
+plot(me1)
+
+me1<-lmer(OFL.norm~(1|Type.assess), data=scon.dat, REML=T)
+summary(me1)
+AIC(me1)
+plot(me1)
+
+me1<-lmer(OFL.norm~(1|Sp.Type)+(1|Sp.comm)+(1|Type.assess)+(1|Red.Type), data=scon.dat, REML=T)
+summary(me1)
+AIC(me1)
+
+#me1<-lme(OFL.norm~1 + Rec.cv*Mean.age.catch, data=scon.dat, REML=T)
+#summary(me1)
+#AIC(me1)
+
 
 ```
 
 ##Extrapoloate regression results to new species
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+There are no results to extrapolate!
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
