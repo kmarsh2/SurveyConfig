@@ -123,5 +123,5 @@ AIC(me1)
 ```
 
 ##Extrapoloate regression results to new species
-There are no results to extrapolate!
+There are no results to extrapolate! at least not yet
 
